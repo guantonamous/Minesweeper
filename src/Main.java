@@ -89,6 +89,8 @@ public class Main
 				}
 			}
 			
+			
+			
 		//closing while loop
 		}
 		
@@ -144,7 +146,76 @@ public class Main
 	//closing for placeMines
 	}
 	
+	//this resets the board and sets all values to "_"
+	public static void resetBoard(String[][] gameBoard)
+	{
+		
+		//loop through the array and add the "_"
+		for(int i = 0; i < gameBoard.length; i++)
+		{
+			for(int k = 0; k < gameBoard[i].length; k++)
+			{
+				gameBoard[i][k] = "_";
+			}
+		}
+		
+	}
+	
+	//checks to see if the game board is full
+	public static boolean gameBoardFull(String[][] gameBoard)
+	{
+		for(int i = 0; i < gameBoard.length; i++)
+		{
+			for(int k = 0; k < gameBoard[i].length; k++)
+			{
+				if(gameBoard[i][k] == " ")
+				{
+					return true;
+				}
+			}
+		}
+		
+		return false;
+		
+	//closes gameBoardFull
+	}
+	
+	//this method prints the board
+	public static void printBoard(String[][] arr)
+	{
+		
+		//using an enhanced for loop to print the board
+		for(String[] oneD : arr)
+		{
+			for(String elem : oneD)
+			{
+				System.out.print(elem + " ");
+			}
+			System.out.println("");
+		}
+		
+	//closing printBoard
+	}
 	
 	
+	//this method checks to see if the mines guessed were correct
+	public static boolean checkValidMines(String[][] key, String[][] gameBoard)
+	{
+		
+		//cycle through the array
+		for(int i = 0; i < key.length; i++)
+		{
+			for(int k = 0; k < key[i].length; k++)
+			{
+				if(key[i][k] != "M" && gameBoard[i][k] == "M")
+				{
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	//closing for checkValidMines
+	}
 //closing for main CODE
 }
