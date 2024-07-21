@@ -215,7 +215,106 @@ public class Main
 		}
 		
 		return true;
-	//closing for checkValidMines
 	}
-//closing for main CODE
+
+	//this method fills every square with the number of adjacent mines
+	public static void fillBoard(String[][] key)
+	{
+		
+		//counter for the number of adjacent M to assign to the square
+		int counter = 0;
+		
+		//cycles thorugh all the adjacent columsn and rows next to it
+		for(int i = 0; i < key.length; i++)
+		{
+			for(int k = 0; k < key[i].length; k++)
+			{
+				
+				
+				//"if mid square"
+				//if it is in one of the center squares -- excluding the exterior squares
+				if( (i > 0 && i < key.length - 1) && (k > 0 && k < key[i].length - 1) )
+				{
+					
+					//below left
+					if( (key[i + 1][k - 1].equals("M") ))
+					{
+						counter++;
+					}
+					
+					//below
+					if( (key[i + 1][k].equals("M") ))
+					{
+						counter++;
+					}
+					
+					//below right
+					if( (key[i + 1][k + 1].equals("M") ))
+					{
+						counter++;
+					}
+					
+					//left
+					if( (key[i][k - 1].equals("M") ))
+					{
+						counter++;
+					}
+					
+					//right
+					if( (key[i][k + 1].equals("M") ))
+					{
+						counter++;
+					}
+					
+					
+					//top left
+					if( (key[i - 1][k - 1].equals("M") ))
+					{
+						counter++;
+					}
+					
+					//top
+					if( (key[i - 1][k].equals("M") ))
+					{
+						counter++;
+					}
+					
+					//top right
+					if( (key[i - 1][k + 1].equals("M") ))
+					{
+						counter++;
+					}
+					
+					//assign the current square a value 
+					key[i][k].equals( "" + counter + "");
+					
+					
+				//end of "if mid square"
+				}
+				
+				
+				//"corner squares"
+				//if it is any of the corner squares
+				else if ( (i == 0 && k == 0) || (i == 0 && k == key[i].length - 1) || (i == key.length - 1 && k == 0) || (i == key.length - 1 && k == key[i].length - 1) )
+				{
+					
+					
+					//if top left
+					
+					
+				}
+				
+				
+				
+				
+			//end of k
+			}
+			
+		//end of i
+		}
+		
+	//end of fillBoard method
+	}
+	
+	//closing for main CODE
 }
