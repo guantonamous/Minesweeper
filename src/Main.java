@@ -129,6 +129,8 @@ public class Main
 				continue1 = false;
 			}
 			
+			//test and did bug fixes
+			
 			//if the board is full and the miens are in the wrong place... LOSE
 			else if (isBoardFullCounter == totalSquares && !(checkValidMines(key, gameBoard)) )
 			{
