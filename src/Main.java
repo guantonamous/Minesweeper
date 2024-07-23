@@ -28,9 +28,17 @@ public class Main
 		//create the total mines using online algorithm
 		int totalMines = (int) ((length * width) * 0.15625);
 		
+		
+		//to be able to play
+		resetBoard(gameBoard);
+		resetBoard(key);
+		
+		
 		//declaring the row and column
 		int row = 0;
 		int col = 0;
+		
+		int totalSquares = width * length;
 		
 		//the runner for the first while loop
 		boolean continue1 = true;
@@ -43,7 +51,7 @@ public class Main
 		while(continue1)
 		{
 			
-			
+			printBoard(gameBoard);
 			
 			//first introduction
 			System.out.println("Pick a cell");
@@ -58,8 +66,14 @@ public class Main
 			System.out.println("Col: ");
 			col = myScan.nextInt();
 			
+			//space
+			System.out.println("");
+			
 			//make the move using makeMove method
 			makeMove(gameBoard, key, row, col);
+			
+			//prints the ending picked location
+			printBoard(gameBoard);
 			
 			
 			//if they pick a spot with a mine... LOSE
@@ -89,6 +103,40 @@ public class Main
 				}
 			}
 			
+			//if the board is full
+			int isBoardFullCounter = 0;
+			
+			//
+			for(int i = 0; i < gameBoard.length; i++)
+			{
+				for(int k = 0; k < gameBoard[i].length; k++)
+				{
+					if(!(gameBoard[i][k].equals("_")))
+					{
+						isBoardFullCounter++;
+					}
+				}
+			}
+			
+			//space
+			System.out.println("");
+			
+			
+			//if the player guesses the valid mines... WIN
+			if(isBoardFullCounter == totalSquares && checkValidMines(key, gameBoard) == true)
+			{
+				System.out.println("Congratulations! Winner! Winner!");
+				continue1 = false;
+			}
+			
+			//if the board is full and the miens are in the wrong place... LOSE
+			else if (isBoardFullCounter == totalSquares && !(checkValidMines(key, gameBoard)) )
+			{
+				System.out.println("You lose! Your mines were not in the correct place.");
+				System.out.println("Here's the key:");
+				printBoard(key);
+				continue1 = false;
+			}
 			
 			
 		//closing while loop
@@ -224,7 +272,7 @@ public class Main
 		//counter for the number of adjacent M to assign to the square
 		int counter = 0;
 		
-		//cycles thorugh all the adjacent columsn and rows next to it
+		//cycles through all the adjacent column and rows next to it
 		for(int i = 0; i < key.length; i++)
 		{
 			for(int k = 0; k < key[i].length; k++)
@@ -300,10 +348,270 @@ public class Main
 					
 					
 					//if top left
+					if(i == 0 && k==0)
+					{
+						
+						//right
+						if( (key[i][k + 1].equals("M")) )
+						{
+							counter++;
+						}
+						
+						//below right
+						if( (key[i + 1][k + 1].equals("M")) )
+						{
+							counter++;
+						}
+						
+						//below
+						if( (key[i + 1][k].equals("M")) )
+						{
+							counter++;
+						}
+
+					//end of top left
+					}
+					
+					//if top right
+					else if(i == 0 && k == key[i].length - 1)
+					{
+						
+						//left
+						if( key[i][k - 1].equals("M"))
+						{
+							counter++;
+						}
+						
+						//below left
+						if( key[i + 1][k - 1].equals("M"))
+						{
+							counter++;
+						}
+						
+						//below
+						if( key[i + 1][k].equals("M"))
+						{
+							counter++;
+						}
+						
+					//end of top right
+					}
 					
 					
+					//bottom left
+					if(i == key.length - 1 && k ==0)
+					{
+						
+						//top 
+						if( (key[i - 1][k].equals("M")) )
+						{
+							counter++;
+						}
+						
+						//top right
+						if( (key[i - 1][k + 1].equals("M")) )
+						{
+							counter++;
+						}
+						
+						//right
+						if( (key[i][k + 1].equals("M")) )
+						{
+							counter++;
+						}
+						
+					//close bottom left
+					}
+					
+					//if bottom right
+					if( i == key.length - 1 && k == key[i].length - 1)
+					{
+						
+						//left
+						if( (key[i][k - 1].equals("M")))
+						{
+							counter++;
+						}
+						
+						//top left
+						if( (key[i - 1][k - 1].equals("M")))
+						{
+							counter++;
+						}
+						
+						//top
+						if( (key[i - 1][k].equals("M")))
+						{
+							counter++;
+						}
+						
+					//close bottom right
+					}
+					
+				//close corner squares
 				}
 				
+				//top excluding corners
+				else if( (i == 0 && (k != 0 && k != key[i].length - 1) ))
+				{
+					
+					//below left
+					if( (key[i + 1][k - 1].equals("M")) )
+					{
+						counter++;
+					}
+					
+					//below
+					if( (key[i + 1][k].equals("M")) )
+					{
+						counter++;
+					}
+					
+					//below right
+					if( (key[i + 1][k + 1].equals("M")) )
+					{
+						counter++;
+					}
+					
+					//left
+					if( (key[i][k - 1].equals("M")) )
+					{
+						counter++;
+					}
+					
+					//right
+					if( (key[i][k + 1].equals("M")) )
+					{
+						counter++;
+					}
+					
+				//closing top excluding squares
+				}
+				
+				//right excluding corners
+				else if( (i != 0 && i != key.length - 1) && k == key[i].length - 1)
+				{
+					
+					//below left
+					if( (key[i + 1][k - 1].equals("M")))
+					{
+						counter++;
+					}
+					
+					//below
+					if( (key[i + 1][k].equals("M")))
+					{
+						counter++;
+					}
+					
+					//left
+					if( (key[i][k - 1].equals("M")))
+					{
+						counter++;
+					}
+					
+					//top left
+					if( (key[i - 1][k - 1].equals("M")))
+					{
+						counter++;
+					}
+					
+					//top
+					if( (key[i - 1][k].equals("M")))
+					{
+						counter++;
+					}
+					
+				//closing right excluding corners
+				}
+				
+				
+				//bottom excluding corners
+				else if( (i == key.length - 1) && (k != 0 && k != key[i].length - 1))
+				{
+					
+					//left
+					if( (key[i][k - 1].equals("M")) )
+					{
+						counter++;
+					}
+					
+					//right
+					if( (key[i][k + 1].equals("M")) )
+					{
+						counter++;
+					}
+					
+					//top left
+					if( (key[i - 1][k - 1].equals("M")) )
+					{
+						counter++;
+					}
+					
+					//top
+					if( (key[i - 1][k].equals("M")) )
+					{
+						counter++;
+					}
+					
+					//top right
+					if( (key[i - 1][k + 1].equals("M")) )
+					{
+						counter++;
+					}
+					
+				//closing bottom excluding corners
+				}
+				
+				
+				//left excluding corners
+				else if( (i != 0 && i != key.length) && k == 0)
+				{
+					
+					//below
+					if( (key[i + 1][k].equals("M")) )
+					{
+						counter++;
+					}
+					
+					//below right
+					if( (key[i + 1][k + 1].equals("M")) )
+					{
+						counter++;
+					}
+					
+					//right
+					if( (key[i][k + 1].equals("M")) )
+					{
+						counter++;
+					}
+					
+					//top
+					if( (key[i - 1][k].equals("M")) )
+					{
+						counter++;
+					}
+					
+					//top right
+					if( (key[i - 1][k + 1].equals("M")) )
+					{
+						counter++;
+					}
+					
+				//closing top excluding corners
+				}
+				
+				//assigning the value to the square
+				if(key[i][k].equals("M") )
+				{
+					key[i][k] = "M";
+					counter = 0;
+				}
+				else
+				{
+					key[i][k] = ("" + counter + "");
+					counter = 0;
+				}
 				
 				
 				
